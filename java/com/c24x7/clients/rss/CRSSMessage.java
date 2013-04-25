@@ -15,9 +15,9 @@ public final class CRSSMessage extends CRSSItem {
 	public static final String GUID 		= "guid";
 	public static final String ORIG_LINK 	= "origLink";
 
-    private String _author		= null;
-    private String _guid		= null;
-    private String _origLink 	= null;
+    protected String _author		= null;
+    protected String _guid		= null;
+    protected String _origLink 	= null;
     
     
 	public CRSSMessage(	final String title, 

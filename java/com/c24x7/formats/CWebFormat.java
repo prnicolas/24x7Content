@@ -3,13 +3,12 @@ package com.c24x7.formats;
 
 import java.io.IOException;
 
-import com.c24x7.nlservices.CNlOutputFormatter.AFormatProxy;
-import com.c24x7.nlservices.content.CStructuredOutput;
-import com.c24x7.util.CConvertToHTML;
 import com.c24x7.util.CEnv;
 import com.c24x7.util.logs.CLogger;
-import com.c24x7.util.CXMLConverter;
+import com.c24x7.util.string.CXMLConverter;
 import com.c24x7.clients.CFTPClient;
+import com.c24x7.formats.CFormatter.AFormatProxy;
+
 
 
 /**
@@ -21,13 +20,16 @@ import com.c24x7.clients.CFTPClient;
  * @see com.c24x7.nlservices.CNlOutputFormatter.AFormatProxy
  */
 public final class CWebFormat extends AFormatProxy {
-	private static String oldPost = "x";
+	protected CFTPClient _handle 	  = null;
+	protected String	   _inputFile = null;
+	protected String	   _body	  = null;
 
-	private CFTPClient _handle 	  = null;
-	private String	   _inputFile = null;
-	private String 	   _title	  = null;
-	private String	   _body	  = null;
-
+	
+	public AFormatProxy create() {
+		return new CWebFormat();
+	}
+	
+	
 		/**
 		 * <p>If there is no id attached to the generated content,
 		 * it will be inserted into a new page, otherwise extract a div
@@ -36,42 +38,25 @@ public final class CWebFormat extends AFormatProxy {
 		 * @throws IllegalArgumentException if argument is null
 		 * @throws IOException if content cannot be retrieved
 		 */
-	public void format(CStructuredOutput structuredOutput) throws IOException {	
-		if(structuredOutput == null) {
-			throw new IllegalArgumentException("Structured Output is undefined!");
-		}
-		
-		String newPost = structuredOutput.getDescription().trim();
-		if(oldPost.compareTo(newPost) == 0) {
-			_error = "Web page already sent!";
-			_handle = null;
-		}
-		else {
-		
+	public void createMsg(CExtractor extractor) throws IOException  {	
+
 			/*
 			 * Create the input FTP file
 			 */
-			_inputFile = CLogger.createFileName(CEnv.LOCAL_FTP_PATH, "ftp_", "html");
-			_title = structuredOutput.getTitle();
-			_body = newPost;
-			write(_inputFile,  CConvertToHTML.convert(_title, _body));
-			/*
-			 * Initiate the FTP connection and send the content of the file
-			 */
-			if( _handle == null) {
-				_handle= new CFTPClient(_env);
-				_head = _handle.getUrlStr();
-			}
-			
-			/*
-			 * If debug mode is selected then a file is generated
-			 * to contain the duplicated message.
-			 */
-			debug(structuredOutput.toString(), "web/");
+		_inputFile = CLogger.createFileName(CEnv.localftpDir, "ftp_", "html");
+	//		_body = newPost;
+		
+	//	write(_inputFile,  CConvertToHTML.convert("demo", _msg, _body, null));
+	
+		if( _handle == null) {
+			_handle= new CFTPClient("demo");
+			_head = _handle.getUrlStr();
 		}
 	}
 	
-	
+	protected void extractMessage(CExtractor extractor) {
+	}
+
 
 
 	/**
@@ -83,7 +68,7 @@ public final class CWebFormat extends AFormatProxy {
 		StringBuilder buf = new StringBuilder();
 		if( _error == null ) {
 			buf.append( CXMLConverter.put(CXMLConverter.HEAD_TAG, _head) );
-			buf.append( CXMLConverter.put(CXMLConverter.TITLE_TAG, _title) );
+			buf.append( CXMLConverter.put(CXMLConverter.TITLE_TAG, _msg) );
 			buf.append( CXMLConverter.put(CXMLConverter.BODY_TAG, _body) );
 		}
 		else {
@@ -97,6 +82,7 @@ public final class CWebFormat extends AFormatProxy {
 	 * <p>Process the request to the social network target site.
 	 * The process is executed within a separate thread.</p>
 	 */
+	/*
 	protected void process() {
 		try {
 			_handle.update(_inputFile);
@@ -106,6 +92,7 @@ public final class CWebFormat extends AFormatProxy {
 			CLogger.error("Web processing error:" + _error);
 		}
 	}
+	*/
 }
 
 

@@ -3,13 +3,11 @@ package com.c24x7.formats;
 
 import java.io.IOException;
 
-import twitter4j.TwitterException;
+import com.c24x7.clients.twitter.CTwitterPut;
+import com.c24x7.formats.CFormatter.AFormatProxy;
+import com.c24x7.util.string.CXMLConverter;
 
-import com.c24x7.nlservices.CNlOutputFormatter.AFormatProxy;
-import com.c24x7.nlservices.content.CStructuredOutput;
-import com.c24x7.clients.CTwitterClient;
-import com.c24x7.util.logs.CLogger;
-import com.c24x7.util.CXMLConverter;
+
 
 
 /**
@@ -22,11 +20,7 @@ import com.c24x7.util.CXMLConverter;
  */
 public final class CTwitterFormat extends AFormatProxy {
 
-	private final static int MAX_CHARS = 140;
-	private static String oldTweet = "x";
-	private CTwitterClient 	_handle = null;
-	private String			_tweet  = null;
-	private String 			_link 	= "http://tinyUrl/U89HC";
+	protected CTwitterPut 	_handle = null;
 
 		/**
 		 * <p>Generates a output content formatted for Twitter from a list of generated sentences (NLG)</p>
@@ -34,48 +28,17 @@ public final class CTwitterFormat extends AFormatProxy {
 		 * @throws IllegalArgumentException if argument is null
 		 * @throws IOException if generated content cannot be retrieved.
 		 */
-	public void format(CStructuredOutput structuredOutput) throws IOException {
-		if(structuredOutput == null) {
-			throw new IllegalArgumentException("Structured Output is undefined!");
-		}		
-		_error = null;
-		
-		/*
-		 * Discard repeated or duplicate tweets..
-		 */
-		String newTweet = structuredOutput.getTitle().trim();
-		System.out.println("Old tweet: " + oldTweet + "\nNew tweet: " + newTweet);
-		
-		if(oldTweet.compareTo(newTweet) == 0) {
-			_error = "Tweet already sent!";
-			_handle = null;
-		}
-	
-		else {
-			_tweet = newTweet;
-			
-			if(_tweet.length() > MAX_CHARS) {
-				_tweet = _tweet.substring(0, MAX_CHARS-1);
-				CLogger.warn("Tweet:" + _tweet + " is too long");
-			}
-
-			/*
-			 * Load the Twitter REST client
-			 */
-			if( _handle == null) {
-				try {
-					_handle = new CTwitterClient(_env);
-					_head = "http://twitter.com/" + _handle.getTarget();
-				}
-				catch( TwitterException e) {
-					_error = e.toString();
-					CLogger.error("Twitter error: " + _error);
-				}
-			}
-			debug(structuredOutput.toString(), "twitter/");
+	public void createMsg(CExtractor extractor) {
+		if( _handle == null) {
+			_handle = new CTwitterPut();
 		}
 	}
 
+	
+	
+	public AFormatProxy create() {
+		return new CTwitterFormat();
+	}
 	
 	/**
 	 * <p>Build the results stream for the request to social network</p>
@@ -86,7 +49,7 @@ public final class CTwitterFormat extends AFormatProxy {
 		StringBuilder buf = new StringBuilder();
 		if(_error == null) {
 			buf.append( CXMLConverter.put(CXMLConverter.HEAD_TAG, _head) );
-			buf.append( CXMLConverter.put(CXMLConverter.TWEET_TAG, _tweet) );
+			buf.append( CXMLConverter.put(CXMLConverter.TWEET_TAG, _msg) );
 			buf.append( CXMLConverter.put(CXMLConverter.LINK_TAG, _link) );
 		}
 		else {
@@ -100,17 +63,22 @@ public final class CTwitterFormat extends AFormatProxy {
 	 * <p>Process the request to the social network target site.
 	 * The process is executed within a separate thread.</p>
 	 */
+	/*(
 	protected void process() {
 		try {
 			if( _handle != null ) {
-				_handle.update(_tweet);
-				oldTweet = _tweet;
+				_handle.update(_msg);
+				old = _msg;
 			}
 		}
 		catch( IOException e) {
 			_error = "Error processing " + _head;
 			CLogger.error("Twitter Error:" + e.toString());
 		}
+	}
+	*/
+	protected void extractMessage(CExtractor extractor) {	
+		_msg = extractor.getTweet(_link);
 	}
 }
 // -------------------------------  EOF -----------------------------------

@@ -1,4 +1,4 @@
-// Copyright (C) 2010-2011 Patrick Nicolas
+// Copyright (C) 2010-2012 Patrick Nicolas
 package com.c24x7.util;
 
 import java.io.BufferedReader;
@@ -7,6 +7,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.c24x7.exception.InitException;
+import com.c24x7.models.topics.CTopicClassifier;
+import com.c24x7.semantics.CTaxonomyRoots;
+import com.c24x7.semantics.lookup.CLookup;
+import com.c24x7.textanalyzer.CNGramsExtractor;
 import com.c24x7.util.logs.CLogger;
 
 
@@ -17,123 +23,96 @@ import com.c24x7.util.logs.CLogger;
 		 */
 public final class CEnv {
 	public final static String APP_LABEL 		= "app";
-	public final static String USER_LABEL 		= "user";
+	public final static String FACEBOOK_LABEL 	= "facebook";
+	public final static String TWITTER_LABEL 	= "twitter";
+	public final static String TRENDS_LABEL 	= "trends";
 	
-	public final static String PROJECT_DIR 		= "c:\\Users\\Patrick\\workspace\\24x7c\\";
-	public final static String INPUT_PATH		= "input\\";
-	public final static String OUTPUT_PATH		= "output\\";
-	public final static String DEBUG_PATH		= OUTPUT_PATH + "debug\\";
-	public final static String LOCAL_FTP_PATH 	= "input\\ftp\\";
-	public final static String LOGS_DIR			= "logs\\";
-	public final static String TWITTER_LOGS_DIR = LOGS_DIR + "twitter\\";
-	public final static String CONFIG_FILE 		= "config.txt";
-	public final static int	   DEFAULT_PORT		= 18000;
- 
-	public static int    port 					= DEFAULT_PORT;
-	public static String projectDir 			= PROJECT_DIR;
-	public static String configDir 				= projectDir + "config\\";
-	public static String userConfigDir 			= configDir  + "users\\";
-	public static String cacheDir 				= projectDir + "temp\\users\\";
+	protected final static String PROJECT_PATH 			= "c:/Users/Patrick/workspace/24x7c/";
+	protected final static String LOCAL_OUTPUT_DIR		= "output/";
+	protected final static String LOCAL_DEBUG_DIR		= "debug/";
+	protected final static String LOCAL_FTP_DIR 		= "input/ftp/";
+	protected final static String LOCAL_LOGS_DIR		= "logs/";
+	protected final static String LOCAL_TWITTER_DIR 	= "twitter/";
+	protected final static String LOCAL_MODELS_DIR 		= "models/";
+	protected final static String LOCAL_CONFIG_DIR 		= "config/";
+	protected final static String LOCAL_TRAINING_DIR  	= "training/";
+	protected final static String LOCAL_DICT_DIR		= "dict/";
+	protected final static String LOCAL_CORPUS_DIR		= "dict/";
+	protected final static String LOCAL_CONFIG_FILE   	= "config";
+	protected final static String LOCAL_DATASETS_DIR   	= "datasets/";
 
-	public static void init(final String directory, int newport) {
-		port = newport;
-		projectDir = directory;
-		configDir = projectDir + "config\\";
-		userConfigDir  = configDir + "users\\";
-		cacheDir = projectDir + "temp\\users\\";
-	}
 	
-	private static final String FIELD_DELIM 	= ",";
-	private static final String PROP_DELIM 		= ".";
+	public static String projectDir 	= PROJECT_PATH;
+	public static String configDir 		= projectDir + LOCAL_CONFIG_DIR;
+	public static String modelsDir  	= projectDir + LOCAL_MODELS_DIR;
+	public static String trainingDir 	= projectDir + LOCAL_TRAINING_DIR;
+	public static String cacheDir 		= projectDir + "temp/users/";
+	public static String dictDir 		= modelsDir + LOCAL_DICT_DIR;
+	public static String logsDir    	= projectDir + LOCAL_LOGS_DIR;
+	public static String outputDir  	= projectDir + LOCAL_OUTPUT_DIR;
+	public static String corpusDir  	= trainingDir + LOCAL_CORPUS_DIR;
+	public static String debugDir   	= outputDir + LOCAL_DEBUG_DIR;
+	public static String twitterlogsDir = logsDir + LOCAL_TWITTER_DIR;
+	public static String localftpDir 	= projectDir + LOCAL_FTP_DIR;
+	public static String configFile		= configDir + LOCAL_CONFIG_FILE;
+	public static String datasetsDir	= projectDir + LOCAL_DATASETS_DIR;
+
+	public static final float	UNINITIALIZED_FLOAT 	= -1.0F;
+	public static final double	UNINITIALIZED_DOUBLE 	= -1.0;
+	public static final int		UNINITIALIZED_INT   	= -1;
 	
-	private String							  _userId = null;
-	private Map<String, Map<String, String>>  _appConfig = null;
-	private Map<String, Map<String, String>>  _userConfig = null;
-	private Map<String, Map<String, Map<String, String>>> _config = null;
+	public static final String	KEY_VALUE_DELIM 			= ":";
+	public static final String  FIELD_DELIM 				= ",";
+	public static final String 	ENTRIES_DELIM 				= "##";
+	public final static String 	ENCODED_ENTRY_DELIM 		= "%23%23";
+	public static final String  ENTRY_FIELDS_DELIM 			= "#";
+	public final static String 	ENCODED_ENTRY_FIELDS_DELIM 	= "%23";
+	public final static String 	TAXONOMY_FIELD_DELIM 		= "/";
 
-	public CEnv() {
-		this("demo");
-	}
 	
-
-
-			/**
-			 * <p>Create an environment for a specific user.</p>
-			 * @param userId user unique ID
-			 */
-	public CEnv(final String userId) {
-		_userId = userId;
-		_appConfig = load(configDir + CONFIG_FILE);
-		_userConfig = load(userConfigDir + userId);
+	protected static Map<String, Map<String, String>>   appConfig = null;
+	
 		
-		_config = new HashMap<String, Map<String, Map<String, String>>>();
-		_config.put(APP_LABEL, _appConfig);
-		_config.put(USER_LABEL, _userConfig);
+			/**
+			 * <p>Load the configuration file, setup the different directories and 
+			 * initialize all configuration variables and data structures used in the application</p>
+			 * @return true if successful, false otherwise.
+			 */
+	public static boolean init() throws InitException { 
+		boolean success = true;
+		
+		if( appConfig == null ) {
+			appConfig = load();
+				
+			setup();
+			System.out.println(" \n\n**********************  Configuration ******************** ");
+			CNGramsExtractor.init(); 
+			CLookup.init(CLookup.EXTENDED);
+			CTaxonomyRoots.init();
+			CTopicClassifier.init();
+			System.out.println(" ********************************************************** ");
+		}
+		
+		return success;
 	}
 	
-	public final String get(final String config, final String key) {
+	
+	
+	public final static String get(final String group, final String key) {
 		if( key == null ) {
 			throw new NullPointerException("Undefined Environment key");
 		}		
-		int index = key.indexOf(PROP_DELIM);
 		
-		return _config.containsKey(config) ? 
-			   _config.get(config).get(key.substring(0, index)).get(key.substring(index+1)) :
+		return appConfig.containsKey(group) ? 
+			   appConfig.get(group).get(key) :
 			   null;
 	}
 	
-	public final Map<String, String> getConfiguration(final String config, final String group) {
+	public final static Map<String, String> getConfiguration(final String group) {
 		if( group == null ) {
 			throw new NullPointerException("Undefined configuration group");
 		}
-		return _config.containsKey(config) ? 
-			  _config.get(config).get(group) :
-			  null;
-	}
-
-	
-	
-	public final Map<String, Map<String, String>> getConfig(final String configName) {
-		return _config.get(configName);
-	}
-	
-
-	
-	@Override
-	public String toString() {
-		StringBuilder buf = new StringBuilder("Configuration\n");
-		buf.append(getConfigString(APP_LABEL));
-		buf.append("\n");
-		buf.append(getConfigString(USER_LABEL));
-
-		return buf.toString();
-	}
-	
-	
-	private String getConfigString(final String name) {
-		Map<String, String> subConfig = null;
-		Map<String, Map<String, String>> config = getConfig(name);
-		String configDescription = null;
-		
-		if( config != null) {
-			StringBuilder buf = new StringBuilder("\nConfiguration: " + name);
-		
-			for( String attr : config.keySet()) {
-				subConfig = config.get(attr);
-				buf.append("\nGroup=");
-				buf.append(attr);
-			
-				for( String key : subConfig.keySet()) {
-					buf.append("\nKey=");
-					buf.append(key);
-					buf.append(", value=");
-					buf.append(subConfig.get(key));
-				}
-			}
-			configDescription = buf.toString();
-		}
-		
-		return configDescription;
+		return appConfig.get(group); 
 	}
 
 	
@@ -142,13 +121,13 @@ public final class CEnv {
 					//  Private Methods
 					// ----------------------
 	
-	private Map<String, Map<String,String>> load(final String configFile) {
+	protected static Map<String, Map<String,String>> load() {
 		BufferedReader reader = null;
 		String line = null;
 		Map<String,  Map<String, String>> config = null;
 
-
 		try {
+		
 			FileInputStream fis = new FileInputStream(configFile);
 			reader = new BufferedReader(new InputStreamReader(fis));
 			String[] keyValues = null;
@@ -191,6 +170,29 @@ public final class CEnv {
 		
 		return config;
 	}
+	
+	
+	
+
+	protected static boolean setup() {
+		projectDir 	= get("setup", "project");
+		
+		if(projectDir != null) {
+			configDir 		= projectDir + LOCAL_CONFIG_DIR;
+			modelsDir  		= projectDir + LOCAL_MODELS_DIR;
+			cacheDir 		= projectDir + "temp/users/";
+			dictDir 		= CEnv.modelsDir + LOCAL_DICT_DIR;
+			logsDir    		= projectDir + LOCAL_LOGS_DIR;
+			outputDir  		= projectDir + LOCAL_OUTPUT_DIR;
+			corpusDir  		= modelsDir + LOCAL_CORPUS_DIR;
+			debugDir   		= outputDir + LOCAL_DEBUG_DIR;
+			twitterlogsDir 	= logsDir + LOCAL_TWITTER_DIR;
+			localftpDir 	= projectDir + LOCAL_FTP_DIR;
+		}
+		
+		return (projectDir != null);
+	}
+
 	
 }
 

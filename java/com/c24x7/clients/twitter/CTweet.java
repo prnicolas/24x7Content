@@ -1,4 +1,4 @@
-// Copyright (C) 2010-2011 Patrick Nicolas
+// Copyright (C) 2010-2012 Patrick Nicolas
 package com.c24x7.clients.twitter;
 
 import java.util.Calendar;
@@ -14,29 +14,29 @@ public final class CTweet implements Cloneable {
 	/**
 	 * Attribute of social item: id
 	 */
-	private long _id = -1L;
+	protected long _id = -1L;
 
 		/**
 		 * Attributes of social item: content
 		 */
-	private String _content = null;
+	protected String _content = null;
 
 		/**
 		 * Attributes of social item: social network
 		 */
-	private String  _source = null;
+	protected String  _source = null;
 
 		/**
 		 * Attributes of social item: Time stamp
 		 */
-	private Date  _date = null;
+	protected Date  _date = null;
 
 		/**
 		 * Attributes of social item: Author of the message
 		 */
-	private String  _author = null;
+	protected String  _author = null;
 	
-	private String  _link 	= null;
+	protected String  _link 	= null;
 
 
 			/**

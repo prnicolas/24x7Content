@@ -1,4 +1,4 @@
-// Copyright (C) 2010 Patrick Nicolas
+// Copyright (C) 2010-2012 Patrick Nicolas
 package com.c24x7.clients;
 
 import java.io.IOException;
@@ -29,6 +29,15 @@ public abstract class AClient {
 		 */
 	abstract public void update(final String content) throws IOException;
 	
+	public AClient() {}
+	
+	public AClient(	final String userName, 
+					final String password, 
+					final String serverName) {
+		_userName = userName;
+		_password = password;
+		_serverName = serverName;
+	}
 	
 
 		/**

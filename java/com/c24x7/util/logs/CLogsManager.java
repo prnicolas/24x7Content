@@ -1,4 +1,4 @@
-// Copyright (C) 2010-2011 Patrick Nicolas
+// Copyright (C) 2010-2012 Patrick Nicolas
 package com.c24x7.util.logs;
 
 import java.io.BufferedReader;
@@ -34,7 +34,7 @@ public class CLogsManager {
 			 * @throws IOException
 			 */
 	public CLogsManager() throws IOException {
-		this(CEnv.LOGS_DIR);
+		this(CEnv.logsDir);
 	}
 	
 	/**
@@ -131,7 +131,7 @@ public class CLogsManager {
 			// Private methods
 			// -----------------------
 
-	private void extractLogsList() throws IOException {
+	protected void extractLogsList() throws IOException {
 		File inputDir = new File(_logsDirectoryName);
 		
 		 		// Make sure that the directory of input files exists 

@@ -20,11 +20,11 @@ public final class CRSSFeed extends CRSSItem {
 	public static final String PUB_DATE 	= "pubDate";
 	public static final String LINK 		= "link";
 
-	private String _language 	= null;
-	private String _copyright 	= null;
-	private String _pubDate 	= null;
-    private String _link		= null; 
-	private List<CRSSMessage> _entries = new ArrayList<CRSSMessage>();
+	protected String _language 	= null;
+	protected String _copyright 	= null;
+	protected String _pubDate 	= null;
+    protected String _link		= null; 
+	protected List<CRSSMessage> _entries = new ArrayList<CRSSMessage>();
 
 	
 		/**

@@ -1,33 +1,60 @@
-// Copyright (C) 2010 Patrick Nicolas
+// Copyright (C) 2010-2012 Patrick Nicolas
 package com.c24x7.util;
 
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Set;
+import java.util.TreeMap;
 
 
-/**
- * <p>
- * Convenient class to override the standard put/insert method
- * for non-synchronized hash tables (Map)</p>
- * @author Patrick Nicolas
- */
-public final class CIntMap extends HashMap<String, Integer> {
+
+	/**
+	 * <p>
+	 * Convenient class to override the standard put/insert method
+	 * for non-synchronized hash tables (Map)</p>
+	 * @author Patrick Nicolas
+	 * @date 02/14/2012
+	 */
+public class CIntMap extends HashMap<String, Integer> {
 	static final long  serialVersionUID = 931433L;
-	
-	public static final int NUM_INTEGER = 32;
-	public static final Integer[] values = new Integer[NUM_INTEGER];
-	static {
-		for( int j = 0; j < NUM_INTEGER; j++) {
-			values[j] = new Integer(j);
+
+		/**
+		 * <p>Comparator for Integer that excludes equal terms. Contrary to the
+		 * default comparator used in TreeSet and TreeMap this comparator
+		 * return 1 for greater or equals and -1 for less operators
+		 * @author Patrick Nicolas
+		 * @date 01/15/2012
+		 */
+	protected class NComparator implements Comparator<String> {
+		
+		@Override
+		public int compare(String o1, String o2) {
+			return (get(o1).intValue() >= get(o2).intValue()) ? 1 : -1;
 		}
-	}
-	
-	public static final Integer getInteger(int j) {
-		return (j >= NUM_INTEGER) ? null : values[j];
 	}
 	
 	
 	public CIntMap() {
 		super();
+	}
+	
+	
+	public void putAll(CIntMap map) {
+		for( String key : map.keySet() ) {
+			this.put(key);
+		}
+	}
+	
+	public void putAll(CIntMap map, int n) {
+		for( String key : map.keySet() ) {
+			this.put(key, n);
+		}
+	}
+	
+	
+	public final int getInt(final String key) {
+		Integer value = get(key);
+		return (value == null) ? -1 : value.intValue();
 	}
 	
 			/**
@@ -50,7 +77,7 @@ public final class CIntMap extends HashMap<String, Integer> {
 	 * @param value value to be incremented
 	 */
 	public Integer put(final String key, final Integer value) {
-		return put(key, value.intValue());
+		return super.put(key, value);
 	}
 	
 	
@@ -66,6 +93,31 @@ public final class CIntMap extends HashMap<String, Integer> {
 			value += oldValue.intValue();
 		}
 		return super.put(key, new Integer(value));
+	}
+	
+	
+	public final Set<String> order() {
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		TreeMap<String, Integer> treeMap = new TreeMap(new NComparator());
+		for(String key : keySet()) {
+			treeMap.put(key, get(key));
+		}
+	
+		return treeMap.keySet();
+	}
+	
+		
+	@Override
+	public String toString() {
+		StringBuilder buf = new StringBuilder();
+		for( String key : keySet() ) {
+			buf.append("\n");
+			buf.append(key);
+			buf.append(CEnv.KEY_VALUE_DELIM);
+			buf.append(get(key));
+		}
+		
+		return buf.toString();
 	}
 
 }
