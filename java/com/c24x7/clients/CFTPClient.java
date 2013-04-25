@@ -1,4 +1,4 @@
-// Copyright (C) 2010 Patrick Nicolas
+// Copyright (C) 2010-2012 Patrick Nicolas
 package com.c24x7.clients;
 
 
@@ -26,9 +26,10 @@ import com.c24x7.util.CEnv;
 		 */
 public final class CFTPClient extends AClient {
 
-	private FTPClient 	_ftpClient 	= null;
-	private String		_outputFile	= null;
-	private String		_urlStr		= null;
+	protected FTPClient 	_ftpClient 	= null;
+	protected String		_outputFile	= null;
+	protected String		_urlStr		= null;
+	
 	
 			/**
 			 * <p>Create a FTP client to upload and down load files. The server name, user
@@ -37,8 +38,9 @@ public final class CFTPClient extends AClient {
 			 * @param env name environment for the content destination defined by the user name, password and server name
 			 */
 	
-	public CFTPClient(CEnv env) {
-		load(env.getConfiguration(CEnv.USER_LABEL, "web"));
+	public CFTPClient(final String userName) {
+		load(CEnv.getConfiguration("web"));
+		_outputFile = userName + "-" + CLogger.createTimeStamp(false) + ".html";
 	}
 	
 			/**
@@ -132,7 +134,6 @@ public final class CFTPClient extends AClient {
 	@Override
 	protected void load(final Map<String, String> properties) {
 		super.load(properties);
-		_outputFile = properties.get("filename");
 		_urlStr = properties.get("target");
 	}
 	
@@ -153,7 +154,7 @@ public final class CFTPClient extends AClient {
 					//   Private Methods
 					// ---------------------
 	
-	private boolean connect() throws IOException {
+	protected boolean connect() throws IOException {
 		boolean statusOK = true;
 
 				/*
@@ -175,7 +176,7 @@ public final class CFTPClient extends AClient {
 	}
 	
 	
-	private boolean login() throws IOException  {		
+	protected boolean login() throws IOException  {		
 		try {
 			_isLoggedIn = _ftpClient.login(_userName, _password);
 		}

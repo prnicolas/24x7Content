@@ -1,0 +1,38 @@
+.signup_login {
+   position: absolute;
+   top:50px;
+   left:150px;
+   padding:10px;
+   font-size: 12px;
+   font-family: Tahoma;
+   color: #E0E0E0;
+}
+
+
+.signup_class {
+   position: absolute;
+   top:120px;
+   left:60px;
+   font-size: 12px;
+   font-family: Tahoma;
+   color: #E0E0E0;
+}
+
+.signup_progress_class  {
+    position:absolute;
+    top:120px;
+    left:480px;
+}
+
+.signup_targets_add {
+    position:absolute;
+    top:230px;
+    left:60px;
+}
+
+
+.signup_oauth {
+    position:absolute;
+    top:80px;
+    left:60px;
+}

@@ -25,7 +25,7 @@ import javax.xml.namespace.QName;
 public final class CRSSParser {
 	public static final String ITEM = "item";
 	
-	private static Map<String, String> attrMap = null;
+	protected static Map<String, String> attrMap = null;
 	static {
 		attrMap = new HashMap<String, String>();
 		attrMap.put(CRSSItem.TITLE, null);
@@ -37,8 +37,8 @@ public final class CRSSParser {
 		attrMap.put(CRSSFeed.COPYRIGHT, null);
 	}
 	
-	private URL 			_url = null;
-	private XMLEventReader 	_eventReader = null;
+	protected URL 			_url = null;
+	protected XMLEventReader 	_eventReader = null;
 
 
 		/**
@@ -105,7 +105,7 @@ public final class CRSSParser {
 	}
 	
 	
-	private void extractAttribute(final String category) throws XMLStreamException {
+	protected void extractAttribute(final String category) throws XMLStreamException {
 		if( attrMap.containsKey(category) ) {
 			attrMap.put(category, _eventReader.nextEvent().asCharacters().getData());
 		}

@@ -46,9 +46,9 @@ public final class CTwitterFields {
 				 * @author Patrick Nicolas
 				 */
 	public final class NFilter {
-		private CIntMap	_filterMap = null;
-		private boolean	_active	= false;
-		private int		_fieldIndex = -1;
+		protected CIntMap	_filterMap = null;
+		protected boolean	_active	= false;
+		protected int		_fieldIndex = -1;
 		
 		public NFilter(final CIntMap filterMap, int fieldIndex) {
 			_filterMap 	= filterMap;
@@ -71,9 +71,9 @@ public final class CTwitterFields {
 	}
 	
 	
-	private CTweet 				_message 	= null;
-	private NFilter 			_filter 	= null;
-	private SOCIAL_MESSAGE_SCOPE _scope 	= SOCIAL_MESSAGE_SCOPE.ALL;
+	protected CTweet 				_message 	= null;
+	protected NFilter 			_filter 	= null;
+	protected SOCIAL_MESSAGE_SCOPE _scope 	= SOCIAL_MESSAGE_SCOPE.ALL;
 	
 
 	public CTwitterFields() {
@@ -163,25 +163,25 @@ public final class CTwitterFields {
 					// Private Field Update Method
 					// ---------------------------
 	
-	private void setSource() {
+	protected void setSource() {
 		_message = new CTweet();
 		_message.setSource(SOCIALNET_NAME);
 		resetFilter();
 	}
 	
-	private void setId(String fieldValue)  {
+	protected void setId(String fieldValue)  {
 		if( _message != null ) {
 			Long lFieldValue = Long.valueOf(fieldValue);
 			_message.setId(lFieldValue.longValue());
 		}
 	}
-	private void setAuthor(String fieldValue) {
+	protected void setAuthor(String fieldValue) {
 		if( _message != null ) {
 			_message.setAuthor(fieldValue);
 		}
 	}
 	
-	private void setDate(String fieldValue) throws ParseException {
+	protected void setDate(String fieldValue) throws ParseException {
 		if( _message != null ) {
 			Date date = new SimpleDateFormat(DATE_PATTERN).parse(fieldValue);
 			_message.setDate(date);
@@ -190,7 +190,7 @@ public final class CTwitterFields {
 	
 		
 	
-	private void setContent(final String fieldValue) {
+	protected void setContent(final String fieldValue) {
 		
 		if( _message != null && filter()) {
 			String link = extractLink(fieldValue);
@@ -213,7 +213,7 @@ public final class CTwitterFields {
 	
 
 	
-	private static String extractLink(final String content) {
+	protected static String extractLink(final String content) {
 		String link = null;
 		int indexLink = content.indexOf("http://");
 		
@@ -233,19 +233,19 @@ public final class CTwitterFields {
 					//  Private conditional filtering methods
 					// ---------------------------------------
 	
-	private void setFilter(String field, int index) {
+	protected void setFilter(String field, int index) {
 		if(_filter != null) {
 			_filter.set(field, index);
 		}
 	}
 	
-	private void resetFilter() {
+	protected void resetFilter() {
 		if(_filter != null) {
 			_filter.reset();
 		}
 	}
 	
-	private final boolean filter() {
+	protected final boolean filter() {
 		return (_filter == null) || (_filter.isActive());
 	}
 

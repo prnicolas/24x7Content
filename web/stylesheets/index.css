@@ -1,0 +1,255 @@
+
+body {
+	-webkit-background-size: cover; /* Chrome and Safari */
+	-moz-background-size: cover; /* Firefox */
+	background-size: cover;
+	background-position:center; 
+	background-repeat:no-repeat;
+	text-align: left; 	
+	font-size: 90%;	
+}
+div#container {
+	width: 660px;
+    height:470px;
+	padding: 1em;
+	margin: 1em auto 0 auto;
+    /*
+	border-style: outset;
+	border-radius: 1em;	
+	-moz-border-radius: 1em;
+	*/
+}
+#header {
+	height: 44px;
+	width: 660px;
+	background: #fff;
+	padding: 1px;
+	border-radius: 1em;	
+	-moz-border-radius: 1em;	
+	-webkit-background-clip: padding-box;			
+	background-image: url(../images/home/logo.png);
+	background-repeat: no-repeat;
+	background-position: 10px 2px;
+}
+
+
+#logo {
+	width: 210px;
+	height: 40px;
+	margin: 5px 10px;
+	float: left;
+}
+
+#nav1 {
+	padding-right: 0;
+	font-size: 105%;
+}
+#nav2 {
+	margin-top: 30px;
+	font-size: 120%;
+}
+
+#current {
+	background-color:#F3C2FC;
+	color: #c6a02d;
+	font-weight: 900;
+	font-style: oblique;
+}
+
+
+div#main-content{	
+	position: relative;	
+	width: 660px;
+	height: 370px;
+	margin: 2px 1px 3px 0px;			
+	padding: 1px;
+    -webkit-background-clip: padding-box;
+	color: #FFFFFF;
+    background-color:#EEEEEE;
+    background:#EEEEEE;
+    /*
+	background: -webkit-gradient(linear, 68% 0%, 0% 100%, from(#f2e5ff), to(#59116B));
+	*/
+	/* For Mozilla/Gecko (Firefox etc) */
+    /*
+	background: -moz-linear-gradient(left, #59116B, #f2e5ff);
+	*/
+	/* For Internet Explorer 5.5 - 7 */
+    /*
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#CC99FF, endColorstr=#59116B);
+    */
+	/* For Internet Explorer 8 */
+    /*
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#CC99FF, endColorstr=#59116B)";
+	*/
+	-moz-border-radius: 1em;
+	border-radius: 1em;	
+	-webkit-background-clip: padding-box;	
+}
+div#main {
+	clear: both;
+	width: 70%;
+	padding: 20px 10px 20px 30px;
+	color: #fff;			
+	float: left;
+	display: none;	
+}
+
+#footer {
+	clear: both;
+	background-color: #fff;
+    width: 660px;
+	padding: 1px;
+	min-height: 40px;
+	border-radius: 1em;	
+	-moz-border-radius: 1em;	
+	-webkit-background-clip: padding-box;	
+}
+
+.footer_class {
+    position:absolute;
+    top:450px;
+}
+
+.introduction_div_class     {
+    position: relative;
+    top:55px;
+    left:30px;
+}
+
+
+.top_menu_title {
+   position:relative;
+   top:0px;
+   left:280px;
+}
+
+.top_menu_help {
+   position:relative;
+   top:0px;
+   left:620px;
+}
+
+.top_menu {
+   position: relative;
+   top:0px;
+   left:430px;
+}
+
+.privacy_statement_class {
+    position:absolute;
+    background-color:#EEEEEE;
+    padding: 6px;
+    top: 20px;
+    left:160px;
+    width:480px;
+    font-size:18px;
+    font-family: Tahoma;
+    color:#333333;
+}
+
+.interactive_bar_div {
+    position: absolute;
+    top: 50px;
+    left:10px;
+}
+
+.bottom_menu {
+   position: relative;
+   top:0px;
+   left:5px;
+}
+
+
+.login_div {
+   position:relative;
+   padding:10px;
+   top: 70px;
+   left:190px;
+}
+
+.left_menu_class {
+  position:relative;
+  background-color:#EEEEEE;
+  width:120px;
+  padding: 6px;
+  height:130px;
+  top:20px;
+  left:10px;
+}
+
+
+.ticker_class {
+    position:absolute;
+    top: 10px;
+    left:10px;
+}
+
+.global_error {
+    position:relative;
+    font-size: 13px;
+    font-family: Tahoma;
+    font-weight: bold;
+    color: red;
+    top:3px;
+    left:3px;
+}
+
+.global_warning {
+    position:relative;
+    font-size: 13px;
+    font-family: Tahoma;
+    font-weight: bold;
+    color: brown;
+    top:3px;
+    left:3px;
+}
+
+.global_info {
+    position:relative;
+    font-size: 13px;
+    font-family: Tahoma;
+    font-weight: bold;
+    color: blue;
+    top:3px;
+    left:3px;
+}
+
+.alpha_test_div {
+    position:absolute;
+    top:140px;
+    left:185px;
+}
+
+.follow_us {
+    position:relative;
+    display:block;
+    top:0px;
+    left:350px;
+}
+
+
+.scroll-pane {
+    width: 480px;
+    overflow: auto;
+    background: #F0F0F0;
+    height: 320px
+}
+
+.statememt {
+    position:absolute;
+    left:10px;
+    top:30px;
+}
+
+.features_list {
+    position:absolute;
+    left:380px;
+    top:0px;
+}
+
+.features_details {
+    position:absolute;
+    left:20px;
+    top:130px;
+}

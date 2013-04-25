@@ -19,9 +19,8 @@ import com.c24x7.util.logs.CLogsManager;
  * @author Patrick Nicolas
  */
 public class CTwitterLoad {
-	private CLogsManager _logs = null;
-	private List<CTweet> _tweets = new ArrayList<CTweet>();
-
+	protected CLogsManager _logs = null;
+	protected List<CTweet> _tweets = new ArrayList<CTweet>();
 	
 	/**
 	 * <p>

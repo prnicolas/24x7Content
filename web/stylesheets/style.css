@@ -1,0 +1,260 @@
+h1 {
+    font-family: Tahoma;
+    font-weight: bold;
+    font-size: 26px;
+    color: #999999;
+}
+
+h2 {
+    font-family: Tahoma;
+    font-weight: bold;
+    font-size: 20px;
+    color: #000000;
+}
+
+h3 {
+    font-family: Tahoma;
+    font-weight: bold;
+    font-size: 17px;
+    color: #666666;
+}
+
+h4 {
+    font-family: Tahoma;
+    font-weight: bold;
+    font-size: 14px;
+    color: #999999;
+}
+
+h5 {
+    font-family: Tahoma;
+    font-weight: bold;
+    font-size: 12px;
+    color: #999999;
+}
+
+h6 {
+    font-family: Tahoma;
+    font-weight: bold;
+    font-size: 11px;
+    color: #999999;
+}
+
+a {
+
+}
+
+a img {
+  border:none;
+}
+
+
+a {
+  font-size:14px;
+  color: #555555;
+  font-family: Lucinda;
+  text-decoration: none;
+}
+
+a:hover {
+    font-weight: bold;
+    color: #333333;
+    text-decoration: underline;
+}
+a:active {
+    color:#660099;
+    text-decoration: none;
+}
+a.current {
+    font-weight: bold;
+    color:#660099;
+    text-decoration: none;
+}
+
+a.select {
+  font-size:14px;
+  color:#660099;
+  font-family: Lucinda;
+  text-decoration: none;
+}
+
+
+a.small {
+  font-size:12px;
+  color: #555555;
+  font-family: Lucinda;
+  text-decoration: none;
+}
+
+a.small:hover {
+    font-weight: bold;
+    color: #333333;
+    text-decoration: underline;
+}
+a.small:active {
+    color:#660099;
+    text-decoration: none;
+}
+a.small.current {
+    font-weight: bold;
+    color:#660099;
+    text-decoration: none;
+}
+
+
+a.small_sel {
+  font-size:12px;
+  color:#660099;
+  font-family: Lucinda;
+  text-decoration: none;
+}
+
+
+p.small {
+   font-family: Tahoma;
+   font-size: 10px;
+}
+
+p.std {
+   font-family: Tahoma;
+   color: #333333;
+   font-size: 12px;
+}
+
+
+p.xlarge {
+   font-family: Tahoma;
+   color: #FFFFFF;
+   font-size:20px;
+}
+
+
+p.large {
+   font-family: Tahoma;
+   font-weight: bold;
+   color: #666666;
+   font-size: 13px;
+}
+
+p.error {
+   font-family: Tahoma;
+   font-weight: bold;
+   color: red;
+   font-size: 13px;
+}
+
+
+td.section_title {
+    font-family: Tahoma;
+    font-size:13px;
+    font-weight:bold;
+    color: #666666;
+}
+
+
+td.large {
+    font-family: Tahoma;
+    font-size:15px;
+    color: #000000;
+}
+
+td.xxlarge {
+    font-family: Tahoma;
+    font-weight:bold;
+    font-size:20px;
+    color: #E0E0E0;
+}
+
+td.xlarge {
+    font-family: Tahoma;
+    font-weight:bold;
+    font-size:17px;
+    color: #999999;
+}
+
+
+td.std_sel {
+    font-family: Tahoma;
+    font-size:12px;
+    valign:middle;
+    color:#660099;
+}
+
+
+td.std {
+    font-family: Tahoma;
+    font-size:12px;
+    valign:middle;
+    color: #666666;
+}
+
+
+td.small {
+    font-family: Tahoma;
+    font-size:11px;
+    color: #666666;
+}
+td.small_justify {
+    font-family: Tahoma;
+    font-size:11px;
+    color: #666666;
+    text_align:justify;
+    align:justify;
+}
+
+
+td.small_b {
+    font-family: Tahoma;
+    font-size:11px;
+    font-weight:bold;
+    color: #333333;
+}
+
+ll.large {
+   font-family: Tahoma;
+   color: #000000;
+   font-size: 13px;
+}
+
+ll.std {
+   font-family: Tahoma;
+   color: #444444;
+   font-size: 11px;
+}
+
+li.std {
+   font-family: Tahoma;
+   color: #444444;
+   font-size: 12px;
+}
+
+input.content {
+    font-size: 11px;
+    color: #444444;
+    font-family: Tahoma;
+}
+select.std {
+    font-size: 11px;
+    color: #444444;
+    font-family: Tahoma;
+}
+
+
+textarea.content {
+    font-size: 11px;
+    color:  #666666;
+    font-family: Tahoma;
+}
+
+
+input.btn {
+   font-family: Tahoma;
+   font-size: 11px;
+   background-color:#D0D0D0;
+}
+
+input.btn_l {
+   font-family: Tahoma;
+   font-size: 14px;
+   background-color:#D0D0D0;
+}

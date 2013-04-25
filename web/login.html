@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>24x7 Content login</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/index.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+    <script type="text/javascript" src="/javascripts/menu.js"></script>
+    <script type="text/javascript" src="/javascripts/login.js"></script>
+    <script type="text/javascript" src="/javascripts/cookies.js"></script>
+</head>
+
+<body onload="login_onload();">
+  <div id="container">
+        <div id="header">
+            <div class="top_menubar">
+                <div class="top_menu">
+                                <table width="220" >
+                    <tr>
+                        <td width="46" class="std"><a href="index" >Home</a></td>
+                        <td width="60" class="std"><a href="solutions">Solutions</a></td>
+                        <td width="62" class="std"><a href="signup_login">Sign-up</a></td>
+                        <td width="46" class="std"><a href="login" class="select">Login</a></td>
+                    </tr>
+                    </table>
+
+                </div>
+                <div class="top_menu_help">
+                    <a href="javascript:void(0)" onclick="online_help()" ><img src="/images/home/help.png" width="20" height="20" /></a>
+                </div>
+            </div>
+
+        </div>
+        <div id="main-content">
+            <div class="login_div">
+                <table  width="230"  bgcolor="#E0E0E0" >
+                    <tr>
+                        <td id = "msg_id" class="small">
+                            <a  href= "signup_login" class="small">Not an existing user?</a>
+                        </td>
+                    </tr>
+                </table>
+                <form action="login_account" id="login_id" method="post">
+                    <table border="0" width="230" bgcolor="#E0E0E0">
+                        <tr>
+                            <td class="small" width="110">Email:</td>
+                            <td class="small"><input type="text" class="content" name="account" size="20" maxlength="32"/></td>
+                        </tr>
+                        <tr>
+                            <td class="small">Password:</td>
+                            <td class="small"><input type="password" class="content" name="password" size="20" maxlength="32" /></td>
+                        </tr>
+                    </table>
+                    <table  border="0" width="230"  bgcolor="#E0E0E0">
+                        <tr>
+                            <td width="120" class="small"><input type="checkbox" name="dpwd" onclick="login_clear_pwd(this, this.form.password, null)" /> Display password</td>
+                            <td width="120" class="small"><input type="checkbox" name="remember" /> Remember me</td>
+                        </tr>
+
+                        <tr>
+                            <td width="120" align="right"><input type="button" class="btn" value="Submit" onclick="login_submit_demo('msg_id');"/></td>
+                            <td align="left"><input type="reset" class="btn" /></td>
+                        </tr>
+                        <tr>
+                          <td bgcolor="white"></td>
+                          <td bgcolor="white"></td>
+                        </tr>
+                    </table>
+
+                    <table  border="0" width="230" bgcolor="#E0E0E0">
+                        <tr>
+                            <td class="small">
+                                <a href= "signup_login" class="small" >Have you forgotten your password?<br></a>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+
+        </div>
+        <div id="footer" class="footer_class">
+            <div id="bottom_menu_id" class="bottom_menu">
+                <table width="650" >
+                <tr>
+                    <td class="small" width="40" align="center"><a href="privacy">Privacy</a></td>
+                        <td class="small" align="left" width="2">|</td>
+                        <td class="small" width="74" align="center"><a href="termsofuse" class="small">Terms of Use</a></td>
+                        <td class="small" align="left" width="2">|</td>
+                        <td class="small" width="54" align="center"><a href="about" class="small">About Us</a></td>
+                        <td class="small" align="left" width="2">|</td>
+                        <td class="small" width="24"><a href="javascript:void(0)" class="small" onclick="window.open('http://24x7content.blogspot.com/', '24x7_Content_Blog', 'width=680,height=560,location,menubar,resizable,scrollbars');">Blog</a></td>
+                        <td class="small" align="left" width="2">|</td>
+                        <td class="small" width="54" align="center"><a href="sitemap" class="small">Site Map</a></td>
+                        <td class="small" align="right">24x7 Content All rights reserved &#169 Copyright 2011</td>
+                </tr>
+                </table>
+            </div>
+            <div class="follow_us">
+                <table width="320">
+                <tr>
+                    <td width="18"><img src="/images/home/follow_twitter.png" width="18" height="18" alt="Follow us on Twitter" /></td>
+                    <td width="142" class="small"><a href="javascript:void(0)" class="small" onclick="window.open('http://www.twitter.com/24x7Content', 'Twitter', 'width=660,height=520')">Follow us on Twitter</a></td>
+                    <td width="18"><img src="/images/home/follow_facebook.png" width="18" height="18" alt="join us on Facebook" /></td>
+                    <td width="142" class="small"><a href="javascript:void(0)" class="small" onclick="window.open('http://www.facebook.com/24x7Content', 'Facebook', 'width=660,height=520')">Join us on Facebook</a></td>
+                </tr>
+                </table>
+            </div>
+        </div>
+  </div>
+</body>
+</html>

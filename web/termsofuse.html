@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Terms of Use</title>
+    <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/site.css">
+    <style type="text/css">
+            .scroll-pane {
+                        width: 665px;
+                        overflow: auto;
+                        background:white;
+                        height: 320px;
+                }
+    </style>
+    <link rel="stylesheet" type="text/css" href="stylesheets/jquery.jscrollpane.css">
+    <script type="text/javascript" src="javascripts/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript" src="javascripts/jquery.jscrollpane.min.js"></script>
+    <script type="text/javascript" src="javascripts/site.js"></script>
+    <script type="text/javascript" src="javascripts/login.js"></script>
+</head>
+
+<body onload="init_layout(381, 3)">
+  <div id="container">
+        <div id="header">
+            <div id="top_menu">
+                <table width="220" >
+                <tr>
+                    <td width="48" class="std"></td>
+                    <td width="48" class="std"><a href="index.html">Home</a></td>
+                    <!--
+                    <td width="48" class="std"><a href="javascript:void(0)" onclick="load_home();load_login();">Login</a></td>
+                    -->
+                    <td width="38" class="std"><a href="faq.html">FAQ</a></td>
+                    <td width="62" class="std"><a href="javascript:void(0)" onclick="online_help()" ><img src="images/home/help.png" width="18" height="18" /></a></td>
+                </tr>
+                </table>
+            </div>
+        </div>
+      
+        <div id="main-content">
+            <div id="left_menu">
+                  <a href="javascript:void(0)" onclick="menu_load_content(3)">Overview</a>
+                  <br><br>
+                  <a href="javascript:void(0)" onclick="menu_load_content(4)">Condition</a>
+                  <br><br>
+                  <a href="javascript:void(0)" onclick="menu_load_content(5)">Account Usage</a>
+            </div>
+            <div id="right_content">
+                 <div id="description_id" class="scroll-pane"></div>
+            </div>
+        </div>
+
+
+        <div id="footer" >
+            <table width="840" >
+            <tr>
+                <td width="40" align="center"><a href="privacy.html"  class="small">Privacy</a></td>
+                  <td align="left" width="2">|</td>
+                  <td width="78" align="center"><a href="termsofuse.html" class="small">Terms of Use</a></td>
+                  <td align="left" width="2">|</td>
+                  <td width="54" align="center"><a href="about.html" class="small">About Us</a></td>
+                  <td align="left" width="2">|</td>
+                  <td width="28"><a href="javascript:void(0)" class="small" onclick="window.open('http://24x7content.blogspot.com/', '24x7_Content_Blog', 'width=680,height=560,location,menubar,resizable,scrollbars');">Blog</a></td>
+                  <td align="left" width="2">|</td>
+                  <td width="60"><a href="javascript:void(0)" class="small" onclick="window.open('http://twitter.com/24x7Content', 'Twitter', 'width=660,height=520,location,menubar,resizable=yes,scrollbars=yes');"><img src="images/home/follow_twitter.png" width="13" height="13" alt="Follow us on Twitter" /> Twitter</a></td>
+                  <td align="left" width="2">|</td>
+                  <td width="74"><a href="javascript:void(0)" class="small" onclick="window.open('http://www.facebook.com/24x7Content', 'Facebook', 'width=660,height=520,location,menubar,resizable,scrollbars');"><img src="images/home/follow_facebook.png" width="13" height="13" alt="Follow us on Facebook" /> Facebook</a></td>
+                  <td align="left" width="2">|</td>
+                  <td width="50" align="center"><a href="sitemap.html" class="small">Site Map</a></td>
+                  <td class="small" align="right">24x7 Content All rights reserved &#169 Copyright 2012</td>
+            </tr>
+            </table>
+        </div>
+  </div>
+</body>
+</html>

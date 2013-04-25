@@ -28,8 +28,8 @@ public final class CRSSGenerator {
 	public static final String RSS_VERSION 	= "version";
 	public static final String RSS_VE 		= "2.0";
 	
-	private String 	_outputFile = null;
-	private CRSSFeed _rssfeed	= null;
+	protected String 	_outputFile = null;
+	protected CRSSFeed _rssfeed	= null;
 
 	
 			/**
@@ -154,12 +154,12 @@ public final class CRSSGenerator {
 
 	
 	
-	private void createNode(final XMLEventWriter eventWriter, 
+	protected void createNode(final XMLEventWriter eventWriter, 
 						    final String name,
 						    final String value) throws XMLStreamException {
 		
 			/*
-			 * Create the XML event factory
+			 * Create the XML event estimatory
 			 */
 		XMLEventFactory eventFactory = XMLEventFactory.newInstance();
 		XMLEvent end = eventFactory.createDTD("\n");

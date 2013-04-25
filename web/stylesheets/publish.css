@@ -1,0 +1,49 @@
+.publish_targets_display  {
+    position:absolute;
+    display:block;
+    top:100px;
+    left:420px;
+}
+
+
+.publish_targets_display {
+    position:absolute;
+    display:block;
+    top:40px;
+    left:330px;
+}
+
+.publish_targets_add {
+    position:absolute;
+    display:block;
+    top:140px;
+    left:10px;
+}
+
+.publish_details {
+    position:absolute;
+    display:block;
+    top:90px;
+    left:10px;
+}
+
+
+.publish_activities {
+    position:absolute;
+    top:180px;
+    left:330px
+}
+
+.publish_account_settings {
+    position:absolute;
+    top:40px;
+    left:330px
+}
+
+.compose_div_class {
+    position:absolute;
+    top:40px;
+    left:10px;
+    width:300px;
+    color:#E0E0E0;
+}

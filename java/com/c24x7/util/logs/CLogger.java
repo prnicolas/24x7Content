@@ -1,4 +1,4 @@
-// Copyright (c) 2010-2011 Patrick Nicolas
+// Copyright (c) 2010-2012 Patrick Nicolas
 package com.c24x7.util.logs;
 
 
@@ -18,6 +18,13 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.SimpleLayout;
 import org.apache.log4j.Level;
 
+import test.c24x7.nlservices.TAnalyzer;
+
+import com.c24x7.apps.CDbpediaApp;
+import com.c24x7.apps.CTaxonomyTrainApp;
+import com.c24x7.apps.CTopicTrainApp;
+import com.c24x7.util.CEnv;
+
 
 
 		/**
@@ -27,44 +34,66 @@ import org.apache.log4j.Level;
 		 */
 
 public final class CLogger {
+	public final static String TOPIC_TRAIN_TRACE =  CTopicTrainApp.class.getName();
+	public final static String TAXONOMY_TRAIN_TRACE =  CTaxonomyTrainApp.class.getName();
+	public final static String SEMANTIC_SERVICE_TRACE = TAnalyzer.class.getName();
+	public final static String DBPEDIA_SERVICE_TRACE = CDbpediaApp.class.getName();
+	
 		/**
-		 * 
-		 * @author Patrick
-		 *
+		 * <p>Enumerator for Logging mode.</p>
+		 * @author Patrick Nicolas
+		 * @date 10/05/2011
 		 */
 	public static enum MODE {
 		NO_LOG, ALL_LOG, INFO_LOG, ERROR_LOG
 	}
 	
-	public static Logger 	logger = null;
-	public static String 	fileName = null;
-	public static boolean	stdOut = false;
+	private static Logger 	logger = null;
+	private static boolean	stdOut = false;
 	
-	private static final int LENGTH_LOG_NUMBER_STR = 4;
+	protected static final int LENGTH_LOG_NUMBER_STR = 4;
 	
-			/**
-			 * <p>
-			 * Initialize the logger parameters...</p>
-			 * @param appClass class of objects managing the log
-			 * @param mode mode of the Java application
-			 */
-	public static void setLoggerClass(Class<?> appClass, MODE mode) {
-		if( mode != MODE.NO_LOG) {
-			logger = Logger.getLogger(appClass);
-			logger.setLevel(mode != MODE.ERROR_LOG ? Level.ALL : Level.ERROR );
-			stdOut = (mode == MODE.INFO_LOG);
-		}
-	}
 
 	
-	public static void setLoggerClassName(String name, MODE mode) {
-		if( mode != MODE.NO_LOG) {
-			logger = Logger.getLogger(name);
-			logger.setLevel(mode != MODE.ERROR_LOG ? Level.ALL : Level.ERROR );
-			stdOut = (mode == MODE.INFO_LOG);
+	public static void setLoggerInfo(final String className) {
+		logger = Logger.getLogger(className);
+		logger.setLevel(Level.ALL);
+		addAppender(CEnv.logsDir + "debug/", null);
+	}
+	
+			/**
+			 * <p>Allow any information to be logged.</p>
+			 */
+	public static void setLoggerInfo() {
+		if( logger != null ) {
+			logger.setLevel(Level.INFO);
+		}
+	}	
+	
+	public static void setStdOut() {
+		stdOut = true;
+	}
+	
+			/**
+			 * <p>Allows information related to a specific trace to be logged.</p>
+			 * @param newTrace
+			 */
+	public static void setLoggerInfo(int newTrace) {
+		if( logger != null ) {
+			logger.setLevel(Level.INFO);
 		}
 	}
 	
+
+	public static boolean isLoggerInfo() {
+		return (logger != null) ? (logger.getLevel() == Level.INFO) : stdOut;
+	}
+	
+	
+	
+	public static void addAppender() {
+		addAppender(CEnv.logsDir + "debug/", null);
+	}
 	
 	/**
 	 * <p>
@@ -118,22 +147,44 @@ public final class CLogger {
 				
 				logger.addAppender(appender);
 				if( !newFile) {
-					logger.info(createTimeStamp());
+					logger.info(createTimeStamp(true));
 				}
 			}
 		}
 		catch(Exception e) {
-			System.out.println("Cannot initiate logs:" + e.toString());
+			CLogger.error("Cannot initiate logs:" + e.toString());
 		}
 	}
 	
-			/**
-			 * <p>Write the info to the existing log.</p>
-			 * @param s string information to be written into log.
-			 */
+	
+		/**
+		 * <p>Write the info to the existing log.</p>
+		 * @param s string information to be written into log.
+		 */
 	public static void info(final String s) {
+		if( stdOut ) {
+			System.out.println(s);
+		}
 		if( logger != null && logger.isInfoEnabled() ) {
 			logger.info(s);
+		}
+	}
+	
+	
+
+	
+		/**
+		 * <p>Write the info to the existing log.</p>
+		 * @param s string information to be written into log.
+		 * @param infoTrace specific tracer to display
+		 */
+	public static void info(final String s, final String className) {
+		if(logger.getName() != null && logger.getName().compareTo(className) == 0) {
+
+			if( logger != null && logger.isInfoEnabled() ) {
+				logger.info(s);
+			}
+			System.out.println(s);
 		}
 	}
 	
@@ -175,6 +226,8 @@ public final class CLogger {
 			 * Retrieve the location of the different log files
 			 * @return Hash table of the location of all the logs
 			 */
+	
+	@SuppressWarnings("unchecked")
 	public static Map<String,String> getLogLocations() {
 		Collection<Logger> allLoggers = new ArrayList<Logger>();
 		Logger rootLogger = Logger.getRootLogger();
@@ -234,7 +287,7 @@ public final class CLogger {
 			buf.append(logFileNumStr);
 		}
 
-		buf.append(createTimeStamp());
+		buf.append(createTimeStamp(true));
 		buf.append(".");
 		buf.append(extension);
 		return buf.toString();
@@ -245,25 +298,28 @@ public final class CLogger {
 					//  Private Methods
 					// ------------------
 	
-	private static String createTimeStamp() {
+	public static String createTimeStamp(boolean longTimeStamp) {
 		Calendar cal = Calendar.getInstance();
 		
 		StringBuilder buf = new StringBuilder();
 		buf.append(cal.get(Calendar.MONTH)+1);
-		buf.append("-");
+		buf.append("_");
 		buf.append(cal.get(Calendar.DAY_OF_MONTH));
 		buf.append("_");
 		buf.append(cal.get(Calendar.HOUR_OF_DAY));
-		buf.append("-");
-		buf.append(cal.get(Calendar.MINUTE));
-		buf.append("-");
-		buf.append(cal.get(Calendar.SECOND));
+		if( longTimeStamp ) {
+			buf.append("_");
+			buf.append(cal.get(Calendar.MINUTE));
+			buf.append("_");
+			buf.append(cal.get(Calendar.SECOND));
+		}
 		
 		return buf.toString();
 	}
+		
 	
 	
-	private static String logFileNumberStr(String logDirName) {	
+	protected static String logFileNumberStr(String logDirName) {	
 		String logNumStr = null;
 		
 		File logDir = new File(logDirName);

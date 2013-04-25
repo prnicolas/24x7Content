@@ -1,4 +1,4 @@
-// Copyright (C) 2010 Patrick Nicolas
+// Copyright (C) 2010-2012 Patrick Nicolas
 package com.c24x7.clients;
 
 import javax.mail.*;
@@ -19,12 +19,29 @@ import com.c24x7.util.CEnv;
 		 * @author Patrick Nicolas
 		 * @date 12/05/2010
 		 */
-public final class CMailClient extends AClient {
-	private Session 			_emailSession = null;
-	private List<String>		_toList = null;
-	private SMTPSSLTransport 	_sslProtocol = null;
-	private String				_subject = null;
+public final class CMailClient extends AClient implements IClientWriter {
+	protected Session 			_emailSession 	= null;
+	protected List<String>		_toList 		= null;
+	protected SMTPSSLTransport 	_sslProtocol 	= null;
+	protected String				_subject 		= null;
+	protected String				_error			= null;
 	
+	
+			/**
+			 * <p>Create a mail client for authentication purpose.</p>
+			 * @param userName mail user name
+			 * @param password user password
+			 * @param serverName name of SMTP server
+			 * @param toList  List of email recipients (addresses)
+			 */
+	public CMailClient(	final String userName, 
+						final String password, 
+						final String serverName,
+						final String toList) { 
+		
+		super(userName, password, serverName);	
+		_toList = new ArrayList<String>();
+	}
 	
 			/**
 			 * <p>Create a SMTP client to push email to a specific SMTP server, on 
@@ -34,10 +51,23 @@ public final class CMailClient extends AClient {
 			 * @param password
 			 * @param toList List of recipients
 			 */
-	public CMailClient(CEnv env) {
-		load(env.getConfiguration("user", "email"));
+	
+	public CMailClient() {
+		super();
+		load(CEnv.getConfiguration("email"));
 	}
 	
+	public IClientWriter create(String content) {
+		return new CMailClient();
+	}
+	
+	public String getError() {
+		return _error;
+	}
+	
+	public void run() {
+		
+	}
 
 			/**
 			 * <p>Return the string of 'to list" recipient</p>
@@ -110,9 +140,10 @@ public final class CMailClient extends AClient {
 	public String toString() {
 		StringBuilder buf = new StringBuilder("mail:");
 		buf.append(_serverName);
-		buf.append("from ");
+		buf.append("  From ");
 		buf.append(_userName);
-		buf.append("to: ");
+		
+		buf.append(" To: ");
 		for( String recipient : _toList) {
 			buf.append(recipient);
 		}
@@ -145,10 +176,7 @@ public final class CMailClient extends AClient {
 	
 	
 
-
-	
-	private boolean connect() throws IOException  {
-		boolean connectOK = true;
+	public boolean connect() throws IOException  {
 		
 		if( !_isLoggedIn ) {
 			Properties properties = new Properties();
@@ -176,16 +204,19 @@ public final class CMailClient extends AClient {
 			}
 			catch(AddressException e) {
 				CLogger.error(e.getMessage());
+				throw new IOException(e.toString());
 			}
 			catch(MessagingException e) {
 				CLogger.error(e.getMessage());
+				throw new IOException(e.toString());
 			}
 			catch(IllegalStateException e) {
 				CLogger.error(e.getMessage());
+				throw new IOException(e.toString());
 			}
 		}
 		
-		return connectOK;
+		return _isLoggedIn;
 	}
 }
 

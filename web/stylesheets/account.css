@@ -1,0 +1,71 @@
+.account_titles {
+    position:absolute;
+    top:28px;
+    left:10px;
+}
+
+.account_interests_set {
+    position:absolute;
+    top:50px;
+    left:10px;
+    height:240px;
+    background-color:#E0E0E0;
+}
+
+.account_sources_set {
+    position:absolute;
+    top:50px;
+    left:140px;
+    height:240px;
+    background-color:#E0E0E0;
+}
+
+.account_layout_set {
+    position:absolute;
+    top:50px;
+    left:300px;
+    height:240px;
+    background-color:#E0E0E0;
+}
+
+.account_font_set {
+    position:absolute;
+    top:50px;
+    left:490px;
+    height:240px;
+    background-color:#E0E0E0;
+}
+
+.account_settings_submit {
+    position:relative;
+    top:293px;
+    left:10px;
+}
+
+
+.account_interests {
+    position:absolute;
+    top:40px;
+    left:10px;
+}
+
+.account_sources {
+    position:absolute;
+    top:40px;
+    left:240px;
+}
+
+
+
+.account_submit {
+    position:relative;
+    top:60px;
+    left:10px;
+}
+
+.account_set {
+    position:relative;
+    top:30px;
+    left:10px;
+}
+
